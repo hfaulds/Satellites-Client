@@ -9,6 +9,7 @@ import org.junit.Test;
 
 import actors.Actor;
 
+@SuppressWarnings("unchecked")
 public class SceneTests {
 
   @Test
