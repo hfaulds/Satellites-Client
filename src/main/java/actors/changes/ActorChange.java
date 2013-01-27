@@ -4,6 +4,7 @@ import actors.Actor;
 
 public interface ActorChange {
 
-  void applyTo(Actor actor);
+  public void applyTo(Actor actor);
+  public boolean equals(Object object);
 
 }

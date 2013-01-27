@@ -16,4 +16,18 @@ public class PossessActorMsg {
     return id;
   }
 
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (!(obj instanceof PossessActorMsg))
+      return false;
+    PossessActorMsg other = (PossessActorMsg) obj;
+    if (id != other.id)
+      return false;
+    return true;
+  }
+
 }

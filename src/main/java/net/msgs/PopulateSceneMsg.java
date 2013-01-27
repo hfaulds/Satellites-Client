@@ -19,8 +19,24 @@ public class PopulateSceneMsg {
   }
 
   public List<Actor> getActors() {
-    // TODO Auto-generated method stub
     return actors;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (this == obj)
+      return true;
+    if (obj == null)
+      return false;
+    if (!(obj instanceof PopulateSceneMsg))
+      return false;
+    PopulateSceneMsg other = (PopulateSceneMsg) obj;
+    if (actors == null) {
+      if (other.actors != null)
+        return false;
+    } else if (!actors.equals(other.actors))
+      return false;
+    return true;
   }
 
 }

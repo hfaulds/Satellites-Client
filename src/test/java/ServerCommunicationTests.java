@@ -3,8 +3,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import game.Scene;
 import game.Vector2D;
 import gui.Callback;
 
@@ -13,12 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.GameClient;
+import net.MsgHandler;
 import net.ServerDetails;
 import net.msgs.ActorChangeMsg;
-import net.msgs.PopulateSceneMsg;
 import net.msgs.LoginErrorMsg;
 import net.msgs.LoginRequestMsg;
 import net.msgs.LoginSuccessfulMsg;
+import net.msgs.PopulateSceneMsg;
 import net.msgs.PossessActorMsg;
 
 import org.junit.After;
@@ -32,8 +31,6 @@ import actors.changes.PositionChange;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 
-import controllers.PlayerInputController;
-
 @SuppressWarnings("unchecked")
 public class ServerCommunicationTests {
 
@@ -43,14 +40,13 @@ public class ServerCommunicationTests {
   private GameClient client;
   private StubbedGameServer server;
 
-  private PlayerInputController playerInputController = mock(PlayerInputController.class);
-  private final Scene scene = mock(Scene.class);
+  private MsgHandler handler = mock(MsgHandler.class);
 
   @Before
   public void setupFakeServer() throws IOException {
     server = new StubbedGameServer();
     server.start();
-    client = new GameClient(scene, playerInputController);
+    client = new GameClient(handler);
   }
   
   @After
@@ -108,47 +104,43 @@ public class ServerCommunicationTests {
   @Test
   public void populateScene() throws IOException {
     final List<Actor> actors = new ArrayList<Actor>();
+    final PopulateSceneMsg msg = new PopulateSceneMsg(actors);
     
     Listener serverListener = new Listener() {
       @Override
       public void connected(Connection connection) {
-        connection.sendTCP(new PopulateSceneMsg(actors));
+        connection.sendTCP(msg);
       }
     };
     server.addListener(serverListener);
     
     client.connectToServer(SERVER_DETAILS);
     
-    verify(scene, timeout(TIMEOUT).times(1)).addActors(actors);
+    verify(handler, timeout(TIMEOUT).times(1)).handlePopulateSceneMsg(eq(msg));
   }
   
   @Test
   public void possesActor() throws IOException {
-    Actor playerActor = mock(Actor.class);
-    when(scene.getActor(0)).thenReturn(playerActor);
+    final PossessActorMsg msg = new PossessActorMsg(0);
     
     Listener serverListener = new Listener() {
       @Override
       public void connected(Connection connection) {
-        connection.sendTCP(new PossessActorMsg(0));
+        connection.sendTCP(msg);
       }
     };
     server.addListener(serverListener);
     
     client.connectToServer(SERVER_DETAILS);
     
-    verify(playerInputController, timeout(TIMEOUT).times(1)).possess(playerActor);
+    verify(handler, timeout(TIMEOUT).times(1)).handlePossessActorMsg(eq(msg));
   }
   
   @Test
   public void updateActor() throws IOException {
-    Actor actor = mock(Actor.class);
-    Vector2D oldPosition = mock(Vector2D.class);
-    
-    when(actor.getPosition()).thenReturn(oldPosition);
-    when(scene.getActor(0)).thenReturn(actor);
-    
+
     final ActorChange positionChange = new PositionChange(new Vector2D(0.5, 0.3));
+    final ActorChangeMsg msg = new ActorChangeMsg(0, positionChange);
 
     Listener serverListener = new Listener() {
       @Override
@@ -159,7 +151,7 @@ public class ServerCommunicationTests {
     server.addListener(serverListener);
     
     client.connectToServer(SERVER_DETAILS);
-    
-    verify(oldPosition, timeout(TIMEOUT).times(1))._set(eq(new Vector2D(0.5, 0.3)));
+
+    verify(handler, timeout(TIMEOUT).times(1)).handleActorChangeMsg(eq(msg));
   }
 }
