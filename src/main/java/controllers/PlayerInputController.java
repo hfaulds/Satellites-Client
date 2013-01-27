@@ -5,7 +5,7 @@ import actors.Actor;
 
 import com.jogamp.newt.event.KeyEvent;
 
-public class PlayerInputController {
+public class PlayerInputController implements Controller {
   
   private static final int KEY_FORWARD = 'W';
   private static final int KEY_LEFT = 'A';
@@ -13,7 +13,6 @@ public class PlayerInputController {
 
   private static final double ACCELERATION = 0.00001;
   private static final double ROTATIONAL_ACCELERATION = 0.0001;
-
 
   private Actor actor;
   

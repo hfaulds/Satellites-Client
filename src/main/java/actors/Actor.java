@@ -41,4 +41,9 @@ public class Actor {
     
   }
 
+  public void tick(long td) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
