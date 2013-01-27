@@ -13,12 +13,12 @@ import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
 import com.esotericsoftware.kryonet.Server;
 
-public class TestServer {
+public class MockServer {
 
   private final Server server = new Server();
   private ServerDetails details;
   
-  public TestServer(ServerDetails details) {
+  public MockServer(ServerDetails details) {
     this.details = details;
   }
 

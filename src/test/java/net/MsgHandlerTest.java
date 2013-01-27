@@ -20,7 +20,7 @@ import actors.changes.ActorChange;
 import controllers.PlayerInputController;
 
 @SuppressWarnings("unchecked")
-public class MsgHandlerTests {
+public class MsgHandlerTest {
 
   private PlayerInputController playerInputController = mock(PlayerInputController.class);
   private final Scene scene = mock(Scene.class);

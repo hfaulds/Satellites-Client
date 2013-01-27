@@ -40,13 +40,13 @@ public class GameClientTest {
   private static final ServerDetails SERVER_DETAILS = new ServerDetails("127.0.0.1", 54555, 54777);
 
   private GameClient client;
-  private TestServer server;
+  private MockServer server;
 
   private MsgHandler handler = mock(MsgHandler.class);
 
   @Before
   public void setupFakeServer() throws IOException {
-    server = new TestServer(SERVER_DETAILS);
+    server = new MockServer(SERVER_DETAILS);
     server.start();
     client = new GameClient(handler);
   }
