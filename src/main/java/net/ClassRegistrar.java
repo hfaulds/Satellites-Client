@@ -1,7 +1,10 @@
 package net;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.esotericsoftware.kryo.Kryo;
 
@@ -16,27 +19,45 @@ public class ClassRegistrar {
   public void registerByPackage(String ... packages) {
     for(String packageName : packages) {
       try {
-        registerByClass(getPackageClasses(packageName).toArray(new Class<?>[0]));
-      } catch (ClassNotFoundException e) {
+        registerByClass(getClassesForPackage(packageName).toArray(new Class<?>[0]));
+      } catch (IOException e) {
         e.printStackTrace();
       }
     }
   }
   
-  private ArrayList<Class<?>> getPackageClasses(String packageName) throws ClassNotFoundException {
+  private ArrayList<Class<?>> getClassesForPackage(String packageName) throws IOException {
     ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
     
     String folder = packageName.replace('.', '/');
     
-    File directory = new File(Thread.currentThread().getContextClassLoader().getResource(folder).getFile());
+    ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+    ArrayList<URL> directories = Collections.list(contextClassLoader.getResources(folder));
+    
+    for(URL directory : directories) {
+      if(!directory.getPath().contains("test")) {
+        ArrayList<Class<?>> classesInDirectory = getClassesForPackageDirectory(packageName, directory);
+        classes.addAll(classesInDirectory);
+      }
+    }
+    
+    return classes;
+  }
+
+  private  ArrayList<Class<?>> getClassesForPackageDirectory(String packageName, URL directoryURL) {
+    ArrayList<Class<?>> classes = new ArrayList<Class<?>>();
+    File directory = new File(directoryURL.getFile());
+    
+    for(File file : directory.listFiles()) {
+      String filename = file.getName();
       
-    if(directory.exists()) {
-      for(File file : directory.listFiles()) {
-        String filename = file.getName();
-        if(filename.endsWith(".class")) {
-          filename = filename.substring(0, filename.length() - ".class".length());
-          String className = packageName + "." + filename;
+      if(filename.endsWith(".class")) {
+        String nameWithoutType = filename.substring(0, filename.length() - ".class".length());
+        String className = packageName + "." + nameWithoutType;
+        try {
           classes.add(Class.forName(className));
+        } catch (ClassNotFoundException e) {
+          e.printStackTrace();
         }
       }
     }
