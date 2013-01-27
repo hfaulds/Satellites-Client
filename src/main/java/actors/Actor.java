@@ -36,4 +36,9 @@ public class Actor {
     return 0;
   }
 
+  public void setRotationAccelleration(double d) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
