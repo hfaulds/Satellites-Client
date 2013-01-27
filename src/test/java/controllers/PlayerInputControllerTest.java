@@ -17,18 +17,18 @@ import com.jogamp.newt.event.KeyEvent;
 public class PlayerInputControllerTest {
   
   private PlayerInputController input;
+  
   private Actor actor = mock(Actor.class);
+  private KeyEvent keyEvent = mock(KeyEvent.class);
   
   @Before
   public void setup() {
     input = new PlayerInputController();
     input.possess(actor);
-    when(actor.getRotation()).thenReturn(0.0);
   }
 
   @Test
   public void forwardInputAcceleratesPlayer() {
-    KeyEvent keyEvent = mock(KeyEvent.class);
     when(keyEvent.getKeyCode()).thenReturn((int) 'W');
     
     input.keyPressed(keyEvent);
@@ -39,7 +39,6 @@ public class PlayerInputControllerTest {
 
   @Test
   public void leftInputSpinsPlayerClockwise() {
-    KeyEvent keyEvent = mock(KeyEvent.class);
     when(keyEvent.getKeyCode()).thenReturn((int) 'A');
     
     input.keyPressed(keyEvent);
@@ -50,7 +49,6 @@ public class PlayerInputControllerTest {
   
   @Test
   public void rightInputSpinsPlayerCounterClockwise() {
-    KeyEvent keyEvent = mock(KeyEvent.class);
     when(keyEvent.getKeyCode()).thenReturn((int) 'D');
     
     input.keyPressed(keyEvent);
@@ -61,12 +59,11 @@ public class PlayerInputControllerTest {
   
   @Test
   public void accelerationIsRemovedWhenKeyIsLifted() {
-    KeyEvent keyEvent = mock(KeyEvent.class);
     when(keyEvent.getKeyCode()).thenReturn((int) 'W');
     
     input.keyPressed(keyEvent);
-    
-    int ticksWhileKeyDown = (int) Math.random();
+
+    int ticksWhileKeyDown = (int) (Math.random() * 10);
     for(int i=0; i < ticksWhileKeyDown; i++)
       input.tick(1);
     
@@ -74,5 +71,21 @@ public class PlayerInputControllerTest {
     input.tick(1);
     
     verify(actor, times(ticksWhileKeyDown)).setAcceleration(eq(new Vector2D(0 , 0.00001)));
+  }
+
+  @Test
+  public void rotationalAccelerationIsRemovedWhenKeyIsLifted() {
+    when(keyEvent.getKeyCode()).thenReturn((int) 'D');
+    
+    input.keyPressed(keyEvent);
+    
+    int ticksWhileKeyDown = (int) (Math.random() * 10);
+    for(int i=0; i < ticksWhileKeyDown; i++)
+      input.tick(1);
+    
+    input.keyReleased(keyEvent);
+    input.tick(1);
+    
+    verify(actor, times(ticksWhileKeyDown)).setRotationAccelleration(-0.0001);
   }
 }

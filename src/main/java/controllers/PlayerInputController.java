@@ -54,6 +54,10 @@ public class PlayerInputController {
       case KEY_FORWARD:
         forwardImpetus = 0;
         break;
+      case KEY_LEFT:
+      case KEY_RIGHT:
+        rotationImpetus = 0;
+        break;
     }
   }
 
