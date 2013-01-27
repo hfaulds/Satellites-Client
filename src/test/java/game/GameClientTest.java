@@ -1,4 +1,5 @@
 package game;
+
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -13,8 +14,8 @@ import java.util.List;
 
 import net.GameClient;
 import net.MsgHandler;
-import net.ServerDetails;
-import net.TestServer;
+import net.ServerDetails;import net.TestServer;
+
 import net.msgs.ActorChangeMsg;
 import net.msgs.LoginErrorMsg;
 import net.msgs.LoginRequestMsg;
@@ -36,7 +37,7 @@ import com.esotericsoftware.kryonet.Listener;
 @SuppressWarnings("unchecked")
 public class GameClientTest {
 
-  private static final int TIMEOUT = 500;
+  private static final int TIMEOUT = 50;
   private static final ServerDetails SERVER_DETAILS = new ServerDetails("127.0.0.1", 54555, 54777);
 
   private GameClient client;

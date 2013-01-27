@@ -9,7 +9,7 @@ public class Scene {
 
   private List<Actor> actors;
 
-  public void addActors(List<Actor> actors) {
+  public void populate(List<Actor> actors) {
     this.actors = actors;
   }
 

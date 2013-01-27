@@ -1,6 +1,7 @@
 package net;
 
 public class ServerDetails {
+  
   public String address;
   public int tcpPort;
   public int udpPort;

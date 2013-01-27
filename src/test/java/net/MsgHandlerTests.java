@@ -1,5 +1,6 @@
 package net;
 
+
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,7 +9,6 @@ import game.Scene;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import net.MsgHandler;
 import net.msgs.ActorChangeMsg;
 import net.msgs.PopulateSceneMsg;
 import net.msgs.PossessActorMsg;
@@ -42,7 +42,7 @@ public class MsgHandlerTests {
     
     handler.handlePopulateSceneMsg(msg);
     
-    verify(scene).addActors(actors);
+    verify(scene).populate(actors);
   }
   
   @Test

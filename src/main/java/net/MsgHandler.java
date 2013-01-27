@@ -24,7 +24,7 @@ public class MsgHandler {
   }
   
   public void handlePopulateSceneMsg(PopulateSceneMsg msg) {
-    scene.addActors(msg.getActors());
+    scene.populate(msg.getActors());
   }
 
   public void handleActorChangeMsg(ActorChangeMsg msg) {
