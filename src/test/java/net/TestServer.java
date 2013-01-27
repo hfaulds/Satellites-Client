@@ -1,7 +1,5 @@
 package net;
 
-
-
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -28,9 +26,9 @@ public class TestServer {
     server.start();
     server.bind(details.tcpPort, details.udpPort);
 
-    ClassRegistrar msgLoader = new ClassRegistrar(server.getKryo());
-    msgLoader.registerByPackage("net.msgs", "actors.changes");
-    msgLoader.registerByClass(ArrayList.class, Actor.class, ActorChange.class, Vector2D.class);
+    ClassRegistrar registrar = new ClassRegistrar(server.getKryo());
+    registrar.registerByPackage("net.msgs", "actors.changes");
+    registrar.registerByClass(ArrayList.class, Actor.class, ActorChange.class, Vector2D.class);
   }
 
   public void addListener(Listener listener) {
