@@ -79,7 +79,6 @@ public class GameClientTest {
     verify(callback, timeout(TIMEOUT).times(1)).callback(false);
   }
 
-  
   @Test
   public void loginSuccessfully() throws IOException, InterruptedException {
     LoginRequestMsg msg = new LoginRequestMsg("username", "password");
