@@ -14,17 +14,14 @@ public class PositionChangeTest {
   
   @Test
   public void applyTo() {
-    Vector2D newPosition = mock(Vector2D.class);
-    PositionChange change = new PositionChange(newPosition);
-    
     Actor actor = mock(Actor.class);
-    Vector2D oldPosition = mock(Vector2D.class);
-    
-    when(actor.getPosition()).thenReturn(oldPosition);
-    
+    when(actor.getPosition()).thenReturn(mock(Vector2D.class));
+    Vector2D newPosition = mock(Vector2D.class);
+
+    PositionChange change = new PositionChange(newPosition);
     change.applyTo(actor);
     
-    verify(oldPosition)._set(newPosition);
+    verify(actor).setPosition(newPosition);
   }
 
 }

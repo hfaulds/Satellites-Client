@@ -10,4 +10,8 @@ public class Actor {
     return position;
   }
 
+  public void setPosition(Vector2D position) {
+    this.position = position;
+  }
+
 }

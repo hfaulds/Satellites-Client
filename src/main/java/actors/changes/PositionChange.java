@@ -18,7 +18,7 @@ public class PositionChange implements ActorChange {
   
   @Override
   public void applyTo(Actor actor) {
-    actor.getPosition()._set(position);
+    actor.setPosition(position);
   }
 
   @Override
