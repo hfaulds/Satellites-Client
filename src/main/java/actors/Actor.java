@@ -14,4 +14,9 @@ public class Actor {
     this.position = position;
   }
 
+  public void setAcceleration(double accelMag) {
+    // TODO Auto-generated method stub
+    
+  }
+
 }
