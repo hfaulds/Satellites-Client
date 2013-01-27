@@ -79,7 +79,7 @@ public class ServerCommunicationTests {
     server.addListener(serverListener);
     
     Callback<Boolean> callback = mock(Callback.class);
-    client.loginOnServer(new LoginRequestMsg(), callback);
+    client.loginOnServer(new LoginRequestMsg("user", "password"), callback);
     
     verify(callback, timeout(TIMEOUT).times(1)).callback(false);
   }
@@ -96,7 +96,7 @@ public class ServerCommunicationTests {
     
     Callback<Boolean> callback = mock(Callback.class);
     client.connectToServer(SERVER_DETAILS);
-    client.loginOnServer(new LoginRequestMsg(), callback);
+    client.loginOnServer(new LoginRequestMsg("user", "password"), callback);
     
     verify(callback, timeout(TIMEOUT).times(1)).callback(true);
   }

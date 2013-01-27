@@ -4,6 +4,10 @@ public class LoginRequestMsg {
 
   private final String username;
   private final String password;
+  
+  public LoginRequestMsg() {
+    this("", "");
+  }
 
   public LoginRequestMsg(String username, String password) {
     this.username = username;
@@ -39,5 +43,5 @@ public class LoginRequestMsg {
       return false;
     return true;
   }
-
+  
 }
