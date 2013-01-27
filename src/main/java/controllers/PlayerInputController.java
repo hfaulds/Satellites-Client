@@ -20,7 +20,6 @@ public class PlayerInputController {
     actor.setAcceleration(accelMag);
   }
 
-
   public void keyPressed(KeyEvent e) {
     switch(e.getKeyCode()) {
       case KEY_FORWARD:
