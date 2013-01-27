@@ -34,7 +34,7 @@ import com.esotericsoftware.kryonet.Listener;
 @SuppressWarnings("unchecked")
 public class ServerCommunicationTests {
 
-  private static final int TIMEOUT = 50;
+  private static final int TIMEOUT = 500;
   private static final ServerDetails SERVER_DETAILS = new ServerDetails("127.0.0.1", 54555, 54777);
 
   private GameClient client;
@@ -44,7 +44,7 @@ public class ServerCommunicationTests {
 
   @Before
   public void setupFakeServer() throws IOException {
-    server = new StubbedGameServer();
+    server = new StubbedGameServer(SERVER_DETAILS);
     server.start();
     client = new GameClient(handler);
   }
@@ -67,37 +67,26 @@ public class ServerCommunicationTests {
   
   @Test
   public void loginUnsuccessfully() throws IOException, InterruptedException {
-    client.connectToServer(SERVER_DETAILS);
-    
-    
-    Listener serverListener = new Listener() {
-      @Override
-      public void received(Connection connection, Object object) {
-        connection.sendTCP(new LoginErrorMsg());
-      }
-    };
-    server.addListener(serverListener);
-    
+    LoginRequestMsg msg = new LoginRequestMsg("username", "password");
+    server.replyToMsgWith(msg, new LoginErrorMsg());
     Callback<Boolean> callback = mock(Callback.class);
-    client.loginOnServer(new LoginRequestMsg("user", "password"), callback);
+    
+    client.connectToServer(SERVER_DETAILS);
+    client.loginOnServer(msg, callback);
     
     verify(callback, timeout(TIMEOUT).times(1)).callback(false);
   }
+
   
   @Test
   public void loginSuccessfully() throws IOException, InterruptedException {
-    Listener serverListener = new Listener() {
-      @Override
-      public void received(Connection connection, Object object) {
-        connection.sendTCP(new LoginSuccessfulMsg());
-      }
-    };
-    server.addListener(serverListener);
-    
+    LoginRequestMsg msg = new LoginRequestMsg("username", "password");
+    server.replyToMsgWith(msg, new LoginSuccessfulMsg());
     Callback<Boolean> callback = mock(Callback.class);
-    client.connectToServer(SERVER_DETAILS);
-    client.loginOnServer(new LoginRequestMsg("user", "password"), callback);
     
+    client.connectToServer(SERVER_DETAILS);
+    client.loginOnServer(msg, callback);
+
     verify(callback, timeout(TIMEOUT).times(1)).callback(true);
   }
   
@@ -105,14 +94,7 @@ public class ServerCommunicationTests {
   public void populateScene() throws IOException {
     final List<Actor> actors = new ArrayList<Actor>();
     final PopulateSceneMsg msg = new PopulateSceneMsg(actors);
-    
-    Listener serverListener = new Listener() {
-      @Override
-      public void connected(Connection connection) {
-        connection.sendTCP(msg);
-      }
-    };
-    server.addListener(serverListener);
+    server.sendOnConnection(msg);
     
     client.connectToServer(SERVER_DETAILS);
     
@@ -122,14 +104,7 @@ public class ServerCommunicationTests {
   @Test
   public void possesActor() throws IOException {
     final PossessActorMsg msg = new PossessActorMsg(0);
-    
-    Listener serverListener = new Listener() {
-      @Override
-      public void connected(Connection connection) {
-        connection.sendTCP(msg);
-      }
-    };
-    server.addListener(serverListener);
+    server.sendOnConnection(msg);
     
     client.connectToServer(SERVER_DETAILS);
     
@@ -138,17 +113,9 @@ public class ServerCommunicationTests {
   
   @Test
   public void updateActor() throws IOException {
-
     final ActorChange positionChange = new PositionChange(new Vector2D(0.5, 0.3));
     final ActorChangeMsg msg = new ActorChangeMsg(0, positionChange);
-
-    Listener serverListener = new Listener() {
-      @Override
-      public void connected(Connection connection) {
-        connection.sendTCP(new ActorChangeMsg(0, positionChange));
-      }
-    };
-    server.addListener(serverListener);
+    server.sendOnConnection(msg);
     
     client.connectToServer(SERVER_DETAILS);
 
