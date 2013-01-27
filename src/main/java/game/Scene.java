@@ -24,10 +24,10 @@ public class Scene {
   }
 
   public void tick(long td) {
-    for(Actor actor : actors)
-      actor.tick(td);
     for(Controller controller : controllers)
       controller.tick(td);
+    for(Actor actor : actors)
+      actor.tick(td);
   }
 
 
