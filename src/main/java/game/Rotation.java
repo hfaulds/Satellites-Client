@@ -1,5 +1,7 @@
 package game;
 
+import maths.Vector2D;
+
 public class Rotation {
 
   public double x;

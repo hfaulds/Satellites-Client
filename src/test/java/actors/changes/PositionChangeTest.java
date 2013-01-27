@@ -3,7 +3,8 @@ package actors.changes;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.verify;
-import game.Vector2D;
+
+import maths.Vector2D;
 
 import org.junit.Test;
 

@@ -1,11 +1,11 @@
 package net;
 
 
-import game.Vector2D;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import maths.Vector2D;
 import net.ClassRegistrar;
 import net.ServerDetails;
 import actors.Actor;

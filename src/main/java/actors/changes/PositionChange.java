@@ -1,6 +1,6 @@
 package actors.changes;
 
-import game.Vector2D;
+import maths.Vector2D;
 import actors.Actor;
 
 

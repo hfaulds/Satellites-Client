@@ -1,6 +1,6 @@
 package actors;
 
-import game.Vector2D;
+import maths.Vector2D;
 
 public class Actor {
 

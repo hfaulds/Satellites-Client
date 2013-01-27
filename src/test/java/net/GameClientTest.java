@@ -1,21 +1,20 @@
-package game;
+package net;
 
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
-import game.Vector2D;
 import gui.Callback;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import maths.Vector2D;
 import net.GameClient;
 import net.MsgHandler;
-import net.ServerDetails;import net.TestServer;
-
+import net.ServerDetails;
 import net.msgs.ActorChangeMsg;
 import net.msgs.LoginErrorMsg;
 import net.msgs.LoginRequestMsg;

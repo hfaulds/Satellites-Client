@@ -1,11 +1,11 @@
 package net;
 
-import game.Vector2D;
 import gui.Callback;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
+import maths.Vector2D;
 import net.msgs.ActorChangeMsg;
 import net.msgs.LoginErrorMsg;
 import net.msgs.LoginRequestMsg;
