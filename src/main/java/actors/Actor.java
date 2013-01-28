@@ -1,5 +1,7 @@
 package actors;
 
+import javax.media.opengl.GL3;
+
 import maths.Vector2D;
 
 public class Actor {
@@ -42,6 +44,11 @@ public class Actor {
   }
 
   public void tick(long td) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  public void render(GL3 gl) {
     // TODO Auto-generated method stub
     
   }

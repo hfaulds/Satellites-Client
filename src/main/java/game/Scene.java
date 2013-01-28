@@ -3,6 +3,8 @@ package game;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.media.opengl.GL3;
+
 import actors.Actor;
 import controllers.Controller;
 
@@ -28,6 +30,11 @@ public class Scene {
       controller.tick(td);
     for(Actor actor : actors)
       actor.tick(td);
+  }
+
+  public void render(GL3 gl) {
+    for(Actor actor : actors)
+      actor.render(gl);
   }
 
 
