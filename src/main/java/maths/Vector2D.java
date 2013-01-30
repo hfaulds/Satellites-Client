@@ -36,6 +36,10 @@ public class Vector2D {
     return new Vector2D(this.x * accelMag, this.y * accelMag);
   }
   
+  public Vector2D add(Vector2D other) {
+    return new Vector2D(this.x + other.x, this.y + other.y);
+  }
+  
   
   /* Utility Functions */
   
@@ -58,6 +62,4 @@ public class Vector2D {
     return true;
   }
   
-  
-
 }
