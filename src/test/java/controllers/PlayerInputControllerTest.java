@@ -34,7 +34,7 @@ public class PlayerInputControllerTest {
     input.keyPressed(keyEvent);
     input.tick(1);
     
-    verify(actor).setAcceleration(eq(new Vector2D(0 , 0.00001)));
+    verify(actor).addForce(eq(new Vector2D(0 , 0.00001)));
   }
 
   @Test
@@ -44,7 +44,7 @@ public class PlayerInputControllerTest {
     input.keyPressed(keyEvent);
     input.tick(1);
     
-    verify(actor).setRotationAccelleration(0.0001);
+    verify(actor).applyTorque(0.0001);
   }
   
   @Test
@@ -54,7 +54,7 @@ public class PlayerInputControllerTest {
     input.keyPressed(keyEvent);
     input.tick(1);
     
-    verify(actor).setRotationAccelleration(-0.0001);
+    verify(actor).applyTorque(-0.0001);
   }
   
   @Test
@@ -70,7 +70,7 @@ public class PlayerInputControllerTest {
     input.keyReleased(keyEvent);
     input.tick(1);
     
-    verify(actor, times(ticksWhileKeyDown)).setAcceleration(eq(new Vector2D(0 , 0.00001)));
+    verify(actor, times(ticksWhileKeyDown)).addForce(eq(new Vector2D(0 , 0.00001)));
   }
 
   @Test
@@ -86,6 +86,6 @@ public class PlayerInputControllerTest {
     input.keyReleased(keyEvent);
     input.tick(1);
     
-    verify(actor, times(ticksWhileKeyDown)).setRotationAccelleration(-0.0001);
+    verify(actor, times(ticksWhileKeyDown)).applyTorque(-0.0001);
   }
 }

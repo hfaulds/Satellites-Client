@@ -27,10 +27,10 @@ public class PlayerInputController implements Controller {
     if(forwardImpetus != 0) {
       double rotation = actor.getRotation();
       Vector2D directionAsVector = new Vector2D(0,1).rotate(rotation);
-      actor.setAcceleration(directionAsVector.multiply(ACCELERATION));
+      actor.addForce(directionAsVector.multiply(ACCELERATION));
     }
     if(rotationImpetus != 0) {
-      actor.setRotationAccelleration(rotationImpetus * ROTATIONAL_ACCELERATION);
+      actor.applyTorque(rotationImpetus * ROTATIONAL_ACCELERATION);
     }
   }
 
