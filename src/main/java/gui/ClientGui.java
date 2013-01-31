@@ -19,8 +19,15 @@ public class ClientGui implements GLEventListener {
     window.setSize(width, height);
     window.addGLEventListener(this);
 
-    animator.start();
-    window.setVisible(true);
+  }
+
+  public void setVisible(boolean visible) {
+    if(visible) {
+      animator.start();
+    } else {
+      animator.stop();
+    }
+    window.setVisible(visible);
   }
 
   @Override
