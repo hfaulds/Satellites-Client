@@ -32,8 +32,8 @@ public class Vector2D {
     return new Vector2D(x,y);
   }
 
-  public Vector2D multiply(double accelMag) {
-    return new Vector2D(this.x * accelMag, this.y * accelMag);
+  public Vector2D multiply(double mag) {
+    return new Vector2D(this.x * mag, this.y * mag);
   }
   
   public Vector2D add(Vector2D other) {
