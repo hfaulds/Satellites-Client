@@ -61,20 +61,5 @@ public class Vector2D {
       return false;
     return true;
   }
-
-  public Vector2D sub(Vector2D screenPosition) {
-    // TODO Auto-generated method stub
-    return null;
-  }
-
-  public void _set(Vector2D sub) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  public Vector2D divide(int i) {
-    // TODO Auto-generated method stub
-    return null;
-  }
   
 }

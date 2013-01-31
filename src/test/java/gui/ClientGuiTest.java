@@ -8,7 +8,7 @@ public class ClientGuiTest {
 
   @Test
   public void guiDelegatesTick() {
-    ClientGui gui = new ClientGui();
+    ClientGui gui = new ClientGui(null, 0, 0);
     
   }
 
